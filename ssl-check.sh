@@ -37,7 +37,9 @@ export TODAY=$(date +%Y-%m-%d)
 # I log into mysql with a test account that has no access to any databases
 # Usage: $(DIFF)
 DIFF () {
-    echo "select datediff('$EXPIRATION', '$TODAY');"  | mysql -N -u igo_test -ptest1516
+    # Dont use mysql for a simple calculation of dates :)
+    echo $(( (`date -d $EXPIRATION +%s` - `date -d $TODAY +%s`) / 86400 ))
+    #echo "select datediff('$EXPIRATION', '$TODAY');"  | mysql -N -u igo_test -ptest1516
 }
 
 # New line just in case its needed 
