@@ -23,11 +23,11 @@ export ALERTDAYS=7
 
 # Get the domain name from the SSL certificate
 # Usage: ${DOMAIN}
-export DOMAIN=$(echo | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509 -noout -subject|cut -d= -f4|cut -d/ -f1)
+export DOMAIN=$(echo | openssl s_client -connect ${1}:443 -servername ${1} 2>/dev/null | openssl x509 -noout -subject|cut -d= -f4|cut -d/ -f1)
 
 # SSL certificate expiration date formatted like YYYY-MM-DD
 # Usage: ${EXPIRATION}
-export EXPIRATION=$(date -d "$(echo | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509 -noout -dates|grep notAfter|cut -d= -f2)" +%Y-%m-%d)
+export EXPIRATION=$(date -d "$(echo | openssl s_client -connect ${1}:443 -servername ${1} 2>/dev/null | openssl x509 -noout -dates|grep notAfter|cut -d= -f2)" +%Y-%m-%d)
 
 # Get todays date formated like YYYY-MM-DD
 # Usage: ${TODAY}
